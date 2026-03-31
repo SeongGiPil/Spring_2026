@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.model.Dept;
 import com.example.demo.model.Professor;
 import com.example.demo.model.Student;
+import com.example.demo.model.User;
 
 @Mapper
 public interface SchoolMapper {
@@ -24,6 +25,18 @@ public interface SchoolMapper {
 	
 	public int insertProf(HashMap<String, Object> map);
 	
+	//학생정보
+	public Student selectStu(HashMap<String, Object> map);
+	
+	//학생삭제
+	public int deleteStu(HashMap<String, Object> map);
+	
+	
+	//교수삭제
+	public int deleteProf(HashMap<String, Object> map);
+	
+	
+
 	
 	
 }

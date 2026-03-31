@@ -62,6 +62,7 @@
                         <th>학과</th>
                     </tr>
                     <tr v-for="item in list">
+                        <td><input type="radio" name="prof" v-model="selectItem" :value="item.profNo" </td>
                         <td>{{item.profNo}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.position}}</td>
@@ -69,8 +70,16 @@
                         <td>{{item.dName2}}</td>
                         <td>{{item.dName3}}</td>
                     </tr>
+                </div>
                 </table>
-            </div>
+                <div class="btn-area">
+                    <a href="/prof/add.do"><button>교수추가</button></a>
+
+                </div>
+                <div>
+                    <button @click="fnRemove(item.uesrId)">삭제</button>
+                </div>
+            
 
         </div>
     </div>
@@ -85,7 +94,8 @@
                 list : [],
                 deptlist:[],
                 position:"",
-                deptNo:""
+                deptNo:"",
+                selectItem:""
             };
         },
         methods: {
@@ -107,8 +117,31 @@
                         self.deptlist=data.deptList;
                     }
                 });
+            },
+            fnRemove : function () {
+                let self = this;
+                if(!confirm("삭제할래?")){
+                    return;
+                }
+
+                let param = {
+                    position:self.position,
+                     profNo : self.selectItem
+                };
+                $.ajax({
+                    url: "http://localhost:8080/prof/remove.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                       alert(data.message);
+                       self.fnGetList();
+                    }
+                });
             }
+       
         }, // methods
+
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;

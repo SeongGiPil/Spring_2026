@@ -63,8 +63,12 @@
                         <td>{{item.dName3}}</td>
                         <td>{{item.grade}}</td>
                         <td>{{item.profName}}</td>
+                       <td> 
+                        <button @click="fnRemove(item.stuNo)">삭제</button>
+                    </td>
                     </tr>
                 </table>
+            
             </div>
         </div>
         <div class="btn-area">
@@ -86,7 +90,8 @@
                deptList:[],
                grade:"",
                dept:"",
-               deptNo:""
+               deptNo:"",
+               Stuinfo:""
             };
         },
         methods: {
@@ -125,7 +130,33 @@
                         
                     }
                 });
-            }
+            },
+
+
+             fnRemove : function (stuNo) {
+                let self = this;
+                 if(!confirm("삭제할래?")){
+                    return;
+                }
+
+                let param = {
+                   stuNo:stuNo
+                };
+                $.ajax({
+                    url: "http://localhost:8080/stu/remove.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        self.fnGetList();
+                        
+                    }
+                });
+            },
+         
+
+
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
