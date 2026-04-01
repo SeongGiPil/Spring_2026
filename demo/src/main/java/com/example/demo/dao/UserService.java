@@ -112,4 +112,19 @@ public class UserService {
 		return resultMap;
 	}
 	
+	public HashMap<String, Object> addUserFile(HashMap<String, Object> map){
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			UserMapper.insertUserFile(map);
+			resultMap.put("message", "등록되었습니다!");
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			resultMap.put("message", "서버 에러!");
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
 }	

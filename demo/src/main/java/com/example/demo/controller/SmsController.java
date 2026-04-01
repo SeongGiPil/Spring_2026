@@ -1,5 +1,22 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.solapi.sdk.SolapiClient;
 import com.solapi.sdk.message.dto.request.MessageListRequest;
 import com.solapi.sdk.message.dto.request.SendRequestConfig;
@@ -13,22 +30,6 @@ import com.solapi.sdk.message.model.Message;
 import com.solapi.sdk.message.model.StorageType;
 import com.solapi.sdk.message.model.voice.VoiceOption;
 import com.solapi.sdk.message.service.DefaultMessageService;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.File;
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 @RestController
 public class SmsController {
@@ -96,37 +97,36 @@ public class SmsController {
      * 단일 메시지 발송 예제
      */
     @PostMapping("/send-one")
-    public HashMap<String,Object> sendOne(@RequestParam("phoneNumber")String phoneNUmber) {
+    public HashMap<String, Object> sendOne(@RequestParam("phoneNumber") String phoneNumber) {
         try {
             Message message = new Message();
-            HashMap<String ,Object>map=new HashMap<String,Object>();
-            String ranstr=randomNumber();
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            String ranStr = randomNumber();
             
             // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
             message.setFrom("");
-            message.setTo("phoneNumber");
-            message.setText("[개발테스트]인증번호"+ranStr()+"를 화면에 입력해주세요");
-            
+            message.setTo(phoneNumber); // 본인 번호
+            message.setText("[개발테스트] 인증번호 " + ranStr + "를 화면에 입력해주세요.");
 
             MultipleDetailMessageSentResponse response = this.messageService.send(message);
             System.out.println(response);
             map.put("res", response);
             map.put("ranStr", ranStr);
-
             return map;
         } catch (Exception e) {
             e.fillInStackTrace();
         }
         return null;
     }
+    
     public String randomNumber() {
-    	Random ran=new Random();
-    	String ranStr="";
+    	Random ran = new Random();
+    	String ranStr = "";
     	for(int i=1; i<=6; i++) {
-    		int num=ran.nextInt(10);
-    		ranStr+=Integer.toString(num);
+    		int num = ran.nextInt(10);
+    		ranStr += Integer.toString(num);
     	}
-    	return "";
+    	return ranStr;
     }
 
     /**

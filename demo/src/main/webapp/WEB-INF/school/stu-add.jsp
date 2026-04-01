@@ -48,7 +48,7 @@
         <div>
             <label>
                 학과 : 
-                <select v-model="deptNo">
+                <select v-model="deptNo1">
                     <option v-for="item in deptList" :value="item.deptNo">{{item.dName}}</option>
                 </select>
             </label>

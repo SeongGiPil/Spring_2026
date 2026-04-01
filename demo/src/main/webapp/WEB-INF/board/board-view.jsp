@@ -36,6 +36,9 @@
          <div>
                 내용:{{info.content}}
          </div>
+         <div>
+             내용(html태그적용):<div v-html="info.contents"></div>
+         </div>
          
     </div>
 </body>
@@ -47,6 +50,8 @@
             return {
                 // 변수 - (key : value)
                 boardNo:"${boardNo}",
+                info:{},
+                fileList:{}
 
             };
         },
@@ -63,11 +68,18 @@
                     type: "POST",
                     data: param,
                     success: function (data) {
+                        console.log(data);
                         self.info=data.info;
+                        self.fileList=data.fileList;
 
                     }
                 });
+            },
+            fnEdit : function(){
+                let self = this;
+                pageChange("/board/edit.do", {boardNo : self.boardNo});
             }
+
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

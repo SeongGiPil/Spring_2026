@@ -28,32 +28,26 @@
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
         <div id="container">
-            <div class="search-area"></div>
-            <label>포지션:
-             <select v-model="position" @change="fnGetList">
-                        <option value="">:: 전체 ::</option>
-                        <option value="정교수">정교수</option>
-                        <option value="조교수">조교수</option>
-                        <option value="전임강사">전임강사</option>
-                        </select>
-                        </label>
-                    <label>
+            <div class="search-area">
+                직급 : 
+                <select v-model="position" @change="fnGetList">
+                    <option value="">:: 전체 ::</option>
+                    <option value="정교수">정교수</option>
+                    <option value="조교수">조교수</option>
+                    <option value="전임강사">전임강사</option>
+                </select>
+                <label>
                     학과 : 
                     <select v-model="deptNo" @change="fnGetList">
                         <option value="">:: 전체 ::</option>
                         <option v-for="item in deptList" :value="item.deptNo">{{item.dName}}</option>
                     </select>
                 </label>
-                </div>
-            
-            
-    
+            </div>
             <div class="table-area">
-
-
-
                 <table>
                     <tr>
+                        <th>선택</th>
                         <th>번호</th>
                         <th>이름</th>
                         <th>포지션</th>
@@ -62,25 +56,21 @@
                         <th>학과</th>
                     </tr>
                     <tr v-for="item in list">
-                        <td><input type="radio" name="prof" v-model="selectItem" :value="item.profNo" </td>
+                        <td><input type="radio" name="prof" v-model="selectItem" :value="item.profNo"></td>
                         <td>{{item.profNo}}</td>
-                        <td>{{item.name}}</td>
+                        <td><a href="javascript:;" @click="fnView(item.profNo)">{{item.name}}</a></td>
                         <td>{{item.position}}</td>
                         <td>{{item.pay}}</td>
                         <td>{{item.dName2}}</td>
                         <td>{{item.dName3}}</td>
                     </tr>
-                </div>
                 </table>
-                <div class="btn-area">
-                    <a href="/prof/add.do"><button>교수추가</button></a>
-
-                </div>
-                <div>
-                    <button @click="fnRemove(item.uesrId)">삭제</button>
-                </div>
-            
-
+            </div>
+            <div class="btn-area">
+                <a href="/prof/add.do"><button>교수추가</button></a>
+                <button @click="fnRemove">삭제</button>
+                <button @click="fnView(selectItem)">상세보기</button>
+            </div>
         </div>
     </div>
 </body>
@@ -92,10 +82,10 @@
             return {
                 // 변수 - (key : value)
                 list : [],
-                deptlist:[],
-                position:"",
-                deptNo:"",
-                selectItem:""
+                deptList : [],
+                position : "",
+                deptNo : "",
+                selectItem : ""
             };
         },
         methods: {
@@ -103,8 +93,8 @@
             fnGetList : function () {
                 let self = this;
                 let param = {
-                    position:self.position,
-                     deptNo : self.deptNo
+                    position : self.position,
+                    deptNo : self.deptNo
                 };
                 $.ajax({
                     url: "http://localhost:8080/prof/list.dox",
@@ -114,19 +104,14 @@
                     success: function (data) {
                         console.log(data);
                         self.list = data.list;
-                        self.deptlist=data.deptList;
+                        self.deptList = data.deptList;
                     }
                 });
             },
             fnRemove : function () {
                 let self = this;
-                if(!confirm("삭제할래?")){
-                    return;
-                }
-
                 let param = {
-                    position:self.position,
-                     profNo : self.selectItem
+                    profNo : self.selectItem
                 };
                 $.ajax({
                     url: "http://localhost:8080/prof/remove.dox",
@@ -134,14 +119,21 @@
                     type: "POST",
                     data: param,
                     success: function (data) {
-                       alert(data.message);
-                       self.fnGetList();
+                        alert(data.message);
+                        self.selectItem = "";
+                        self.fnGetList();
                     }
                 });
+            },
+            fnView : function(profNo){
+                // let _profNo = profNo != '' ? profNo : self.selectItem;
+                if(profNo == ''){
+                    alert("교수 선택해주셈");
+                    return;
+                }
+                pageChange("/prof/view.do", {profNo : profNo});
             }
-       
         }, // methods
-
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;
@@ -151,3 +143,4 @@
 
     app.mount('#app');
 </script>
+

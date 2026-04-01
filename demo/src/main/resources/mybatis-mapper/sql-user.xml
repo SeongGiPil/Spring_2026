@@ -13,6 +13,12 @@
 	INSERT INTO TBL_USER(USERID,PWD,USERNAME)
 	VALUES(#{userId},#{pwd},#{userName})
 	</insert>
+	
+	</insert>
+	<insert id="insertUserFile" parameterType="hashmap">
+		INSERT INTO TBL_User_FILE
+		VALUES(null, #{idx}, #{path}, #{fileName}, #{orgName}, #{size}, #{ext})
+	</insert>
 		<select id="selectUserList" resultType="com.example.demo.model.User">
 		SELECT * 
 		FROM TBL_USER

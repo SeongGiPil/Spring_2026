@@ -36,6 +36,11 @@ public interface SchoolMapper {
 	public int deleteProf(HashMap<String, Object> map);
 	
 	
+	
+	public Professor selectprof(HashMap<String, Object> map);
+	
+	
+	public int updateStu(HashMap<String, Object> map);
 
 	
 	
