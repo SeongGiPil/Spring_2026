@@ -37,9 +37,29 @@
 		<if test="grade != '' and grade != null">
 			AND S.GRADE = #{grade}
 		</if>
-		<if test="deptNo != '' and deptNo != null">
+		<choose>
+		<when test="deptNo != '' and deptNo != null">
 			AND S.DEPTNO1 = #{deptNo}
-		</if>
+		</when>
+		
+		<when test="orderItem=='name'">
+			ORDER BY NAME
+		</when>
+		
+		<when test="selectItem=='dept'">
+			ORDER BY D1.DNAME
+		</when>
+		
+		<when test="selectItem=='grade'">
+			ORDER BY GRADE
+		</when>
+		<othewise>
+			ORDER BY GRADE
+		</othewise>
+		</choose>
+		
+		
+		
 	</select>
 	
 	<select id="selectDeptList" parameterType="hashmap" resultType="com.example.demo.model.Dept">
@@ -76,6 +96,15 @@
 	<delete id="deleteStu" parameterType="hashmap">
 		DELETE FROM STU
 		WHERE STUNO = #{stuNo}
+	</delete>
+	
+	<delete id="deleteAllStu" parameterType="hashmap">
+		DELETE FROM STU
+		WHERE STUNO IN
+		<foreach collection="list" item="stuNo" open"("separator="," close=" ">
+		#{item}
+		
+		</foreach>
 	</delete>
 	
 	<delete id="deleteProf" parameterType="hashmap">

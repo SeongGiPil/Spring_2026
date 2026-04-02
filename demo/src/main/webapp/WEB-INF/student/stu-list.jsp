@@ -46,17 +46,26 @@
                     </select>
                 </label>
             </div>
+            <div class="order-area">
+              <label><input type="radio" name="order"></label> 
+              <label><input type="radio" name="order"></label> 
+              <label><input type="radio" name="order"></label> 
+
+            </div>
             <div class="table-area">
                 <table>
                     <tr>
+                        <th>선택</th>
                         <th>학번</th>
                         <th>이름</th>
                         <th>학부</th>
                         <th>학과</th>
                         <th>학년</th>
                         <th>담당교수</th>
+                        <th>삭제</th>
                     </tr>
                     <tr v-for="item in list">
+                        <td><input type="checkbox" v-model></td>
                         <td>{{item.stuNo}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.dName2}}</td>
@@ -72,10 +81,10 @@
             </div>
         </div>
         <div class="btn-area">
-        <a href="stu/add.do"><button>학생추가
+        <a href="stu/add.do"><button>학생추가</button>
+            <button @click="fnRemoveAll">삭제</button>
 
-        </button>
-
+        
         </div> 
     </div>
 </body>
@@ -91,7 +100,8 @@
                grade:"",
                dept:"",
                deptNo:"",
-               Stuinfo:""
+               Stuinfo:"",
+               orderItem:""
             };
         },
         methods: {
@@ -100,7 +110,8 @@
                 let self = this;
                 let param = {
                     grade : self.grade,
-                    deptNo:self.deptNo
+                    deptNo:self.deptNo,
+                    orderItem:"grade"
                 };
                 $.ajax({
                     url: "http://localhost:8080/stu/list.dox",
@@ -154,6 +165,29 @@
                     }
                 });
             },
+            fnRemoveAll : function (stuNo) {
+                let self = this;
+                var fList=JSON.stringify(self.selectList);
+                let param = {
+                    selectList:fList
+                };
+                $.ajax({
+                    url: "http://localhost:8080/stu/remove-all.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                        alert(data.message);
+                        self.fnGetList();
+                        
+                    }
+                });
+            },
+
+
+            fnView(){
+
+            }
          
 
 

@@ -14,7 +14,7 @@
 	VALUES(#{userId},#{pwd},#{userName})
 	</insert>
 	
-	</insert>
+
 	<insert id="insertUserFile" parameterType="hashmap">
 		INSERT INTO TBL_User_FILE
 		VALUES(null, #{idx}, #{path}, #{fileName}, #{orgName}, #{size}, #{ext})

@@ -42,6 +42,7 @@ public interface SchoolMapper {
 	
 	public int updateStu(HashMap<String, Object> map);
 
+	public int removeAllStu(HashMap<String, Object> map);
 	
 	
 }

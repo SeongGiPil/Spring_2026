@@ -21,7 +21,7 @@ public class UserService {
 		
 		User user = userMapper.selectUser(map);
 		if(user != null) {
-//			ooo님 환영합니다!
+
 			if(user.getPwd().equals(map.get("pwd"))) {
 				resultMap.put("message", user.getUserName() + "님 환영합니다.");
 			} else {
@@ -115,7 +115,7 @@ public class UserService {
 	public HashMap<String, Object> addUserFile(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			UserMapper.insertUserFile(map);
+			/* UserMapper.insertUserFile(map); */
 			resultMap.put("message", "등록되었습니다!");
 			resultMap.put("result", "success");
 		} catch (Exception e) {

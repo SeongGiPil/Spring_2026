@@ -94,7 +94,7 @@ public class UserController {
 
 		return new Gson().toJson(resultMap); 
 	}
-	@RequestMapping("/user/fileUpload.dox")
+	/*@RequestMapping("/user/fileUpload.dox")
 	public String result(@RequestParam("file1") MultipartFile multi, @RequestParam("idx") int idx, HttpServletRequest request,HttpServletResponse response, Model model)
 	{
 		String url = null;
@@ -106,7 +106,7 @@ public class UserController {
 			String originFilename = multi.getOriginalFilename();
 			String extName = originFilename.substring(originFilename.lastIndexOf("."),originFilename.length());
 			long size = multi.getSize();
-			String saveFileName = genSaveFileName(extName);
+			 String saveFileName = genSaveFileName(extName); 
 			
 			System.out.println("uploadpath : " + uploadpath);
 			System.out.println("originFilename : " + originFilename);
@@ -136,10 +136,6 @@ public class UserController {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-		return "redirect:list.do";
-	}
+		return "redirect:list.do";*/
+	/* } */
 }
-	    
-	
-	
-	

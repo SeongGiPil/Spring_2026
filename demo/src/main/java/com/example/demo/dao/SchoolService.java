@@ -127,105 +127,100 @@ public class SchoolService {
 		return resultMap;
 	}
 	
-	
-	public HashMap<String, Object> removeStu(HashMap<String, Object>map){
+	public HashMap<String, Object> removeStu(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		
 		try {
-			
-			
-			int result=schoolMapper.deleteStu(map);
+			int result = schoolMapper.deleteStu(map);
 			
 			resultMap.put("result", "success");
-			
-			resultMap.put("message",Message.MSG_REMOVE);
-			
+			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
-			resultMap.put("message",Message.MSG_SERVER_ERR);
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
 		}
 		return resultMap;
 	}
 	
-	public HashMap<String, Object> removeProf(HashMap<String, Object>map){
+	public HashMap<String, Object> removeAllStu(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		
 		try {
-			
-			
-			int result=schoolMapper.deleteProf(map);
+			int result = schoolMapper.deleteAllStu(map);
 			
 			resultMap.put("result", "success");
-			
-			resultMap.put("message",Message.MSG_REMOVE);
-			
+			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
-			resultMap.put("message",Message.MSG_SERVER_ERR);
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
 		}
 		return resultMap;
 	}
 	
-	
-	
-	public HashMap<String, Object> getStuInfo(HashMap<String, Object>map){
+	public HashMap<String, Object> removeProf(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		
 		try {
-			Student info=schoolMapper.selectStu(map);
+			int result = schoolMapper.deleteProf(map);
 			
-			resultMap.put("Info", info);
 			resultMap.put("result", "success");
-			
-			resultMap.put("message",Message.MSG_SEARCH);
-			
+			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
-			resultMap.put("message",Message.MSG_SERVER_ERR);
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
 		}
 		return resultMap;
 	}
 	
-	
-	public HashMap<String, Object> getProfInfo(HashMap<String, Object>map){
+	public HashMap<String, Object> getStuInfo(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		
 		try {
-			Professor info=schoolMapper.selectprof(map);
+			Student info = schoolMapper.selectStu(map);
 			
-			resultMap.put("Info", info);
+			resultMap.put("info", info);
 			resultMap.put("result", "success");
-			
-			resultMap.put("message",Message.MSG_SEARCH);
-			
+			resultMap.put("message", Message.MSG_SEARCH);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
-			resultMap.put("message",Message.MSG_SERVER_ERR);
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
 		}
 		return resultMap;
 	}
 	
-	public HashMap<String, Object> editStu(HashMap<String, Object>map){
+	public HashMap<String, Object> getProfInfo(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			int result=schoolMapper.updateStu(map);
+			Professor info = schoolMapper.selectprof(map);
 			
+			resultMap.put("info", info);
 			resultMap.put("result", "success");
-			
-			resultMap.put("message",Message.MSG_EDIT);
-			
+			resultMap.put("message", Message.MSG_SEARCH);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
-			resultMap.put("message",Message.MSG_SERVER_ERR);
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
+		}
+		return resultMap;
+	}
+	
+	public HashMap<String, Object> editStu(HashMap<String, Object> map){
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = schoolMapper.updateStu(map);
+			
+			resultMap.put("result", "success");
+			resultMap.put("message", Message.MSG_EDIT);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			resultMap.put("result", "fail");
+			resultMap.put("message", Message.MSG_SERVER_ERR);
 		}
 		return resultMap;
 	}
