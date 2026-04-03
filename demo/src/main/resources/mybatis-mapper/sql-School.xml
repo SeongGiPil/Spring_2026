@@ -53,9 +53,9 @@
 		<when test="selectItem=='grade'">
 			ORDER BY GRADE
 		</when>
-		<othewise>
+		<otherwise>
 			ORDER BY GRADE
-		</othewise>
+		</otherwise>
 		</choose>
 		
 		
@@ -101,7 +101,7 @@
 	<delete id="deleteAllStu" parameterType="hashmap">
 		DELETE FROM STU
 		WHERE STUNO IN
-		<foreach collection="list" item="stuNo" open"("separator="," close=" ">
+		<foreach collection="list" item="stuNo" open="(" separator="," close=" )">
 		#{item}
 		
 		</foreach>

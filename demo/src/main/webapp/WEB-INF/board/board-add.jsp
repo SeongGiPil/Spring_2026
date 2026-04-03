@@ -137,16 +137,19 @@
                     type: "POST",
                     data: param,
                     success: function (data) {
-                        alert(data.message);
                         if(data.result == 'success'){
-                            self.fnFileAdd(data.boardNo);
-                             location.href="/board/list.do";
+                            if($("#file1")[0].files[0] != undefined){
+                                self.fnFileAdd(data.boardNo);
+                            } else {
+                                alert("등록되었습니다!");
+                                location.href="/board/list.do";
+                            }
                         }
                     }
                 });
             },
 
-            fnFileAdd : function(){
+            fnFileAdd : function(boardNo){
                 var self = this;
                 var form = new FormData();
                 form.append( "file1",  $("#file1")[0].files[0] );
@@ -164,9 +167,8 @@
                     , contentType : false
                     , data : form
                     , success:function(response) { 
-                        alert("등록됨!");
+                        alert("등록 됨!");
                         location.href="/board/list.do";
-                        
                     }	           
                 });
             }

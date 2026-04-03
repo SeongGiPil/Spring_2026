@@ -16,13 +16,13 @@ import com.example.demo.model.Student;
 public class SchoolService {
 	@Autowired
 	SchoolMapper schoolMapper;
-	
-	public HashMap<String, Object> getProfList(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getProfList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			List<Professor> list = schoolMapper.selectProfList(map);
 			List<Dept> deptList = schoolMapper.selectDeptList(map);
-			
+
 			resultMap.put("list", list);
 			resultMap.put("deptList", deptList);
 			resultMap.put("result", "success");
@@ -35,13 +35,13 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> getStuList(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getStuList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			List<Student> list = schoolMapper.selectStuList(map);
 			List<Dept> deptList = schoolMapper.selectDeptList(map);
-			
+
 			resultMap.put("list", list);
 			resultMap.put("deptList", deptList);
 			resultMap.put("result", "success");
@@ -54,12 +54,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> getDeptList(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getDeptList(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			List<Dept> list = schoolMapper.selectDeptList(map);
-			
+
 			resultMap.put("list", list);
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_SEARCH);
@@ -71,8 +71,8 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> addStu(HashMap<String, Object> map){
+
+	public HashMap<String, Object> addStu(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 
@@ -88,8 +88,8 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> addProf(HashMap<String, Object> map){
+
+	public HashMap<String, Object> addProf(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 
@@ -105,12 +105,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> getStu(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getStu(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			Student info = schoolMapper.selectStu(map);
-			if(info != null) {
+			if (info != null) {
 				resultMap.put("stuFlg", false);
 				resultMap.put("message", "이미 사용중인 학번입니다.");
 			} else {
@@ -126,12 +126,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> removeStu(HashMap<String, Object> map){
+
+	public HashMap<String, Object> removeStu(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			int result = schoolMapper.deleteStu(map);
-			
+
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
@@ -142,28 +142,24 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> removeAllStu(HashMap<String, Object> map){
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			int result = schoolMapper.deleteAllStu(map);
-			
-			resultMap.put("result", "success");
-			resultMap.put("message", Message.MSG_REMOVE);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			resultMap.put("result", "fail");
-			resultMap.put("message", Message.MSG_SERVER_ERR);
-		}
-		return resultMap;
-	}
-	
-	public HashMap<String, Object> removeProf(HashMap<String, Object> map){
+
+	/*
+	 * public HashMap<String, Object> removeAllStu(HashMap<String, Object> map){
+	 * HashMap<String, Object> resultMap = new HashMap<String, Object>(); try { int
+	 * result = schoolMapper.deleteAllStu(map);
+	 * 
+	 * resultMap.put("result", "success"); resultMap.put("message",
+	 * Message.MSG_REMOVE);
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception
+	 * System.out.println(e.getMessage()); resultMap.put("result", "fail");
+	 * resultMap.put("message", Message.MSG_SERVER_ERR); } return resultMap; }
+	 */
+	public HashMap<String, Object> removeProf(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			int result = schoolMapper.deleteProf(map);
-			
+
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
@@ -174,12 +170,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> getStuInfo(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getStuInfo(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			Student info = schoolMapper.selectStu(map);
-			
+
 			resultMap.put("info", info);
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_SEARCH);
@@ -191,12 +187,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> getProfInfo(HashMap<String, Object> map){
+
+	public HashMap<String, Object> getProfInfo(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			Professor info = schoolMapper.selectprof(map);
-			
+
 			resultMap.put("info", info);
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_SEARCH);
@@ -208,12 +204,12 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
-	public HashMap<String, Object> editStu(HashMap<String, Object> map){
+
+	public HashMap<String, Object> editStu(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			int result = schoolMapper.updateStu(map);
-			
+
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_EDIT);
 		} catch (Exception e) {
@@ -224,5 +220,5 @@ public class SchoolService {
 		}
 		return resultMap;
 	}
-	
+
 }

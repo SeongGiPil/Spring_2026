@@ -10,20 +10,39 @@ import com.example.demo.common.Message;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class UserService {
 	
 	@Autowired
 	UserMapper userMapper;
 	
+	@Autowired
+	HttpSession session;
+	
 	public HashMap<String, Object> login(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		User user = userMapper.selectUser(map);
+		resultMap.put("loginResult", false);
 		if(user != null) {
-
+//			ooo님 환영합니다!
 			if(user.getPwd().equals(map.get("pwd"))) {
 				resultMap.put("message", user.getUserName() + "님 환영합니다.");
+				resultMap.put("loginResult", true);
+				session.setAttribute("sessionId", user.getUserId());
+				session.setAttribute("sessionName", user.getUserName());
+				session.setAttribute("sessionRole", user.getRole());
+				
+//				if(user.getRole().equals("A")) {
+//					resultMap.put("url", "/prof/list.do");
+//				} else {
+//					resultMap.put("url", "/stu/list.do");
+//				}
+				resultMap.put("url", "/board/list.do");
+				
+//				session.invalidate(); 세션 모든 정보 삭제(로그아웃 버튼 눌렀을 때)
 			} else {
 				resultMap.put("message", "비밀번호를 확인해주세요.");
 			}
@@ -112,19 +131,4 @@ public class UserService {
 		return resultMap;
 	}
 	
-	public HashMap<String, Object> addUserFile(HashMap<String, Object> map){
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			/* UserMapper.insertUserFile(map); */
-			resultMap.put("message", "등록되었습니다!");
-			resultMap.put("result", "success");
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			resultMap.put("message", "서버 에러!");
-			resultMap.put("result", "fail");
-		}
-		return resultMap;
-	}
-	
-}	
+}

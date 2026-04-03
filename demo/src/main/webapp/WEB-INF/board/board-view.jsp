@@ -27,19 +27,25 @@
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
+        <div>
+            제목 : {{info.title}}
+        </div> 
+        <div>
+            조회수 : {{info.cnt}}
+        </div> 
+        <div v-for="item in fileList">
+            <img :src="item.filePath">
+        </div>
+        <div>
+            내용 : {{info.contents}}
+        </div> 
          <div>
-                제목:{{info.title}}    
-         </div>
-         <div>
-                조회수:{{info.cnt}}
-         </div>
-         <div>
-                내용:{{info.content}}
-         </div>
-         <div>
-             내용(html태그적용):<div v-html="info.contents"></div>
-         </div>
-         
+            내용(html태그적용) :  <div v-html="info.contents"></div>
+        </div> 
+        <div v-if="info.userId == sessionId || sessionRole == 'A'">
+            <button @click="fnEdit">수정</button>
+            <button>삭제</button>
+        </div>
     </div>
 </body>
 </html>
@@ -49,18 +55,20 @@
         data() {
             return {
                 // 변수 - (key : value)
-                boardNo:"${boardNo}",
-                info:{},
-                fileList:{}
-
+                boardNo : "${boardNo}",
+                sessionId : "${sessionId}",
+                sessionRole : "${sessionRole}",
+                info : {},
+                fileList : []
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnGetBoard: function () {
+            fnGetBoard : function () {
                 let self = this;
                 let param = {
-                    boardNo:self.boardNo
+                    boardNo : self.boardNo,
+                    kind : "view"
                 };
                 $.ajax({
                     url: "http://localhost:8080/board/info.dox",
@@ -69,9 +77,8 @@
                     data: param,
                     success: function (data) {
                         console.log(data);
-                        self.info=data.info;
-                        self.fileList=data.fileList;
-
+                        self.info = data.info;
+                        self.fileList = data.fileList;
                     }
                 });
             },
@@ -79,7 +86,6 @@
                 let self = this;
                 pageChange("/board/edit.do", {boardNo : self.boardNo});
             }
-
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

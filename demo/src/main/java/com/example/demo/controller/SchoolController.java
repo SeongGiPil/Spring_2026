@@ -127,20 +127,21 @@ public class SchoolController {
 		return new Gson().toJson(resultMap); 
 	}
 	
-	@RequestMapping(value = "/stu/remove-all.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String removeAll(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		String json = map.get("selectList").toString(); 
-		ObjectMapper mapper = new ObjectMapper();
-		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
-		map.put("list", list);
-		
-		System.out.println(map);
-		resultMap = schoolService.removeAllStu(map);
-
-		return new Gson().toJson(resultMap); 
-	}
+	/*
+	 * @RequestMapping(value = "/stu/remove-all.dox", method = RequestMethod.POST,
+	 * produces = "application/json;charset=UTF-8")
+	 * 
+	 * @ResponseBody public String removeAll(Model model, @RequestParam
+	 * HashMap<String, Object> map) throws Exception { HashMap<String, Object>
+	 * resultMap = new HashMap<String, Object>(); String json =
+	 * map.get("selectList").toString(); ObjectMapper mapper = new ObjectMapper();
+	 * List<Object> list = mapper.readValue(json, new
+	 * TypeReference<List<Object>>(){}); map.put("list", list);
+	 * 
+	 * System.out.println(map); resultMap = schoolService.removeAllStu(map);
+	 * 
+	 * return new Gson().toJson(resultMap); }
+	 */
 	
 	@RequestMapping(value = "/prof/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
