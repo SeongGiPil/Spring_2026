@@ -13,7 +13,7 @@ import com.example.demo.model.User;
 public interface ProductMapper {
 	//여러개 리턴->selectXXXList
 	public List<Product> selectOrderList(HashMap<String, Object>map);
-	
+
 }
 
 

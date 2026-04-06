@@ -8,6 +8,7 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/js/page-change.js"></script>
     <style>
         table, tr, td, th{
             border : 1px solid black;
@@ -26,7 +27,16 @@
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 작업 -->
-         
+
+        <div><label>사번:<input v-model="empNo"></label></div>
+        <div><label>이름:<input v-model="eName"></label></div>
+        <div><label>직급:<input v-model="job"></label></div>
+        
+
+       
+        <div>
+            <button @click="fnEmpAdd">직원 추가</button>
+        </div>
     </div>
 </body>
 </html>
@@ -36,27 +46,55 @@
         data() {
             return {
                 // 변수 - (key : value)
+               list:[],
+               empNo:"",
+               eName:"",
+               job:""
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnList: function () {
+            fnEmpList : function () {
                 let self = this;
                 let param = {};
+                $.ajax({
+                    url: "http://localhost:8080/emp/list.dox",
+                    dataType: "json",
+                    type: "POST",
+                    data: param,
+                    success: function (data) {
+                      self.list=data.list;
+                    }
+                });
+            },
+           
+            fnEmpAdd : function () {
+                let self = this;
+                let param = {
+                    empNo : self.empNo,
+                    eName : self.eName,
+                    job:    self.job
+                };
                 $.ajax({
                     url: "http://localhost:8080/emp-add.dox",
                     dataType: "json",
                     type: "POST",
                     data: param,
                     success: function (data) {
-
+                        alert(data.message);
+                        if(data.result == 'success'){
+                            location.href= "/emp.do";
+                        }
                     }
                 });
-            }
+            },
+           
+             
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;
+         self.fnEmpList();
         }
     });
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.EmpMapper">
+	<select id="selectEmpList" resultType="com.example.demo.model.Emp">
+		select
+		e1.*,
+		dname,
+		grade,
+		e2.ename as mgrname
+		from emp e1
+		left join salgrade s on e1.sal between s.losal and s.hisal
+		left join dept d on d.deptno = e1.deptno
+		left join emp e2 on e1.mgr = e2.empno;
+		LIMIT#{pageSize} OFFSET #{offSet}
+		
+	</select>
+
+	<select id="selectEmp" resultType="com.example.demo.model.Emp">
+		select
+		e1.*,
+		dname,
+		grade,
+		e2.ename as mgrname
+		from emp e1
+		left join salgrade s on e1.sal between s.losal and s.hisal
+		left join dept d on d.deptno = e1.deptno
+		left join emp e2 on e1.mgr = e2.empno
+		where e1.empNo = #{empNo}
+	</select>
+	
+	<select id="selectEmpCount" resultType="int">
+	select
+		count(*)
+		from emp e1
+		left join salgrade s on e1.sal between s.losal and s.hisal
+		left join dept d on d.deptno = e1.deptno
+		left join emp e2 on e1.mgr = e2.empno
+		
+	</select>
+	
+	
+
+	<!--//삽입-->
+	<insert id="insertEmp" parameterType="hashmap">
+	INSERT INTO EMP(empNo,eName,job)
+	VALUES(#{empNo}, #{eName}, #{job})
+	</insert>
+	
+	<delete id="deleteEmp" parameterType="hashmap">
+        DELETE FROM EMP WHERE empNo= #{empNo}
+    </delete>
+
+</mapper>
+	
+	
+	
+	
