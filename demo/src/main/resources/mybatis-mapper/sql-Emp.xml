@@ -11,8 +11,8 @@
 		from emp e1
 		left join salgrade s on e1.sal between s.losal and s.hisal
 		left join dept d on d.deptno = e1.deptno
-		left join emp e2 on e1.mgr = e2.empno;
-		LIMIT#{pageSize} OFFSET #{offSet}
+		left join emp e2 on e1.mgr = e2.empno
+		LIMIT #{pageSize} OFFSET #{offSet}
 		
 	</select>
 
@@ -30,12 +30,12 @@
 	</select>
 	
 	<select id="selectEmpCount" resultType="int">
-	select
-		count(*)
-		from emp e1
-		left join salgrade s on e1.sal between s.losal and s.hisal
-		left join dept d on d.deptno = e1.deptno
-		left join emp e2 on e1.mgr = e2.empno
+		SELECT 
+			COUNT(*)
+		FROM EMP E1
+		INNER JOIN EMP E2 ON E1.MGR = E2.EMPNO
+		INNER JOIN SALGRADE S ON E1.SAL BETWEEN S.LOSAL AND S.HISAL
+		INNER JOIN DEPT D ON E1.DEPTNO = D.DEPTNO
 		
 	</select>
 	

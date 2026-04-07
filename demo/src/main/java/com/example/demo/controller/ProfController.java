@@ -11,49 +11,50 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dao.EmpService;
+import com.example.demo.dao.ProfService;
 import com.google.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class EmpController {
+public class ProfController {
 	
 	@Autowired
-	EmpService empService;
+	ProfService profService;
 	
 	// 웹브라우저로 접속하는 주소, return은 jsp파일
 	
 	
-	@RequestMapping("/emp.do") 
+	@RequestMapping("/prof/list.do") 
 	public String Emp(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		return "emp/emp-list";
+		return "prof/prof-list";
 	}
 	
-	@RequestMapping("/emp-add.do") 
+	@RequestMapping("/prof/add.do") 
 	public String add(Model model) throws Exception{
-		return "/emp/emp-add";
+		return "/prof/prof-add";
 	}
-	@RequestMapping("/emp/view.do") 
+	@RequestMapping("/prof/view.do") 
 	public String view(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		System.out.println(map);
 		request.setAttribute("map", map);
-		return "/emp/emp-view"; 
+		return "/prof/prof-view"; 
 	}
 	
 	
 	
 	
 	
-	@RequestMapping(value = "/emp-add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/prof-add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		System.out.println(map);
-		resultMap= empService.addEmp(map);
+		resultMap= profService.addProf(map);
 
 		return new Gson().toJson(resultMap); 
 	}
-	@RequestMapping(value = "/emp/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/prof/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String copy(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -62,28 +63,28 @@ public class EmpController {
 		map.put("pageSize", pageSize);
 		map.put("offSet", offSet);
 		
-		resultMap = empService.getEmpList(map);
+		resultMap = profService.getProfList(map);
 		
 		return new Gson().toJson(resultMap); 
 	}
 
 	
 	
-	@RequestMapping(value = "/emp-remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/prof-remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		System.out.println(map);
-		resultMap = empService.removeEmp(map);
+		resultMap = profService.removeProf(map);
 		
 		return new Gson().toJson(resultMap); 
 	}
 	
-	@RequestMapping(value = "/emp/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/prof/info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = empService.getEmpInfo(map);
+		resultMap = profService.getProfInfo(map);
 
 		return new Gson().toJson(resultMap); 
 	}

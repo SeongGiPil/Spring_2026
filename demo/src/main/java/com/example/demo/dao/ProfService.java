@@ -7,25 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.common.Message;
-import com.example.demo.mapper.EmpMapper;
-import com.example.demo.model.Emp;
-import com.example.demo.model.Student;
-import com.example.demo.model.User;
+import com.example.demo.mapper.ProfMapper;
+import com.example.demo.model.Prof;
 
 @Service
-public class EmpService {
+public class ProfService {
 	
 	@Autowired 
-	EmpMapper empMapper;
+	ProfMapper profMapper;
 	
 	
-	public HashMap<String, Object> getEmpList(HashMap<String, Object>map){
+	public HashMap<String, Object> getProfList(HashMap<String, Object>map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		
 		try {
-			List<Emp> list = empMapper.selectEmpList(map);
-			int totalCount=empMapper.selectEmpCount(map);
+			List<Prof> list = profMapper.selectProfList(map);
+			int totalCount=profMapper.selectProfCount(map);
 			resultMap.put("totalCount",totalCount);
 			
 			resultMap.put("list",list);
@@ -43,10 +41,10 @@ public class EmpService {
 		return resultMap;
 	}
 	
-	public HashMap<String, Object> addEmp(HashMap<String, Object> map){
+	public HashMap<String, Object> addProf(HashMap<String, Object> map){
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-		int cnt = empMapper.insertEmp(map);
+		int cnt = profMapper.insertProf(map);
 			resultMap.put("result", "success");
 			resultMap.put("message", Message.MSG_ADD);
 		} catch (Exception e) {
@@ -59,10 +57,10 @@ public class EmpService {
 	}
 
 	
-	public HashMap<String, Object> removeEmp(HashMap<String, Object> map) {
+	public HashMap<String, Object> removeProf(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			 int cnt = empMapper.DeleteEmp(map);
+			 int cnt = profMapper.DeleteProf(map);
 			resultMap.put("result","success");
 			resultMap.put("message", Message.MSG_REMOVE);
 		} catch (Exception e) {
@@ -74,10 +72,10 @@ public class EmpService {
 		return resultMap;
 	}
 	
-	public HashMap<String, Object> getEmpInfo(HashMap<String, Object> map) {
+	public HashMap<String, Object> getProfInfo(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			Emp info = empMapper.selectEmp(map);
+			Prof info = profMapper.selectProf(map);
 			
 			resultMap.put("info", info);
 			resultMap.put("result", "success");
@@ -90,12 +88,6 @@ public class EmpService {
 		}
 		return resultMap;
 	}
-	
-	
-
-	
-	
-	
 }
 
 	
